@@ -7,11 +7,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
         }
 
         .chatbot {
             position: fixed;
-            bottom: 0;
+            bottom: 15px;
             right: 15px;
             width: 300px;
             background-color: white;
@@ -19,6 +22,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none;
             flex-direction: column;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         .chatbot-header {
@@ -43,17 +48,22 @@
             align-items: center;
         }
 
-        .chatbot-footer input {
-            width: 80%;
-            padding: 5px;
+        .chatbot-footer input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
         }
 
         .chatbot-footer button {
-            padding: 5px 10px;
+            padding: 8px 15px;
             background-color: #007bff;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
         }
 
         .open-button {
@@ -64,7 +74,9 @@
             background-color: #007bff;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         .close-button {
@@ -77,6 +89,16 @@
 
         .bot-message {
             font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .bot-message a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .bot-message a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -86,7 +108,7 @@
             <span>Chatbot</span>
             <button id="closeChatbot" class="close-button">&times;</button>
         </div>
-        <div class="chatbot-body">
+        <div class="chatbot-body" id="chatbotBody">
             <p>Hello! How can I help you today?</p>
         </div>
         <div class="chatbot-footer">
@@ -107,9 +129,7 @@
             document.getElementById('openChatbot').style.display = 'block';
         });
 
-        document.getElementById('sendChat').addEventListener('click', function() {
-            sendMessage();
-        });
+        document.getElementById('sendChat').addEventListener('click', sendMessage);
 
         document.getElementById('chatInput').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
@@ -119,19 +139,21 @@
 
         function sendMessage() {
             const chatInput = document.getElementById('chatInput');
-            const chatBody = document.querySelector('.chatbot-body');
+            const chatBody = document.getElementById('chatbotBody');
 
             if (chatInput.value.trim() !== '') {
-                const newMessage = document.createElement('p');
-                newMessage.textContent = chatInput.value;
-                chatBody.appendChild(newMessage);
+                const userMessage = document.createElement('p');
+                userMessage.textContent = chatInput.value;
+                userMessage.style.textAlign = 'right';
+                userMessage.style.marginBottom = '5px';
+                chatBody.appendChild(userMessage);
                 chatInput.value = '';
                 chatBody.scrollTop = chatBody.scrollHeight;
 
                 // Respond with preset messages
                 setTimeout(() => {
                     const botResponses = [
-                        { text: "You can reach us on Messenger:", link: "https://m.me/Illuminate%20Inception" },
+                       { text: "You can reach us on Messenger:", link: "https://m.me/Illuminate%20Inception" },
                         { text: "You can contact us via WhatsApp:", link: "https://wa.me/+9779846366349" },
                         { text: "Visit our Facebook page:", link: "https://www.facebook.com/profile.php?id=61562652415629" },
                         { text: "Call us at:", link: "tel:+977063420606 or +9779846366349" }
