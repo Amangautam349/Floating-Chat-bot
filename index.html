@@ -113,6 +113,25 @@
                 chatBody.appendChild(newMessage);
                 chatInput.value = '';
                 chatBody.scrollTop = chatBody.scrollHeight;
+
+                // Respond with preset messages
+                setTimeout(() => {
+                    const botResponses = [
+                        "How can I help you?",
+                        "You can reach us on Messenger: [https://m.me/Illuminate%20Inception]",
+                        "You can contact us via WhatsApp: [https://wa.me/+9779846366349]",
+                        "Visit our Facebook page: [https://www.facebook.com/profile.php?id=61562652415629]",
+                        "Call us at: [9846366349]"
+                    ];
+
+                    for (const response of botResponses) {
+                        const botMessage = document.createElement('p');
+                        botMessage.textContent = response;
+                        botMessage.style.fontWeight = 'bold';
+                        chatBody.appendChild(botMessage);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }
+                }, 500);
             }
         });
     </script>
