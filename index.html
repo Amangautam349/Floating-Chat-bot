@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .chatbot {
+            position: fixed;
+            bottom: 0;
+            right: 15px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+        }
+
+        .chatbot-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-body {
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        .chatbot-footer {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-footer input {
+            width: 80%;
+            padding: 5px;
+        }
+
+        .chatbot-footer button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .open-button {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-header">
+            <span>Chatbot</span>
+            <button id="closeChatbot" class="close-button">&times;</button>
+        </div>
+        <div class="chatbot-body">
+            <p>Hello! How can I help you today?</p>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button id="sendChat" class="send-button">Send</button>
+        </div>
+    </div>
+    <button id="openChatbot" class="open-button">Chat</button>
+
+    <script>
+        document.getElementById('openChatbot').addEventListener('click', function() {
+            document.getElementById('chatbot').style.display = 'flex';
+            document.getElementById('openChatbot').style.display = 'none';
+        });
+
+        document.getElementById('closeChatbot').addEventListener('click', function() {
+            document.getElementById('chatbot').style.display = 'none';
+            document.getElementById('openChatbot').style.display = 'block';
+        });
+
+        document.getElementById('sendChat').addEventListener('click', function() {
+            const chatInput = document.getElementById('chatInput');
+            const chatBody = document.querySelector('.chatbot-body');
+
+            if (chatInput.value.trim() !== '') {
+                const newMessage = document.createElement('p');
+                newMessage.textContent = chatInput.value;
+                chatBody.appendChild(newMessage);
+                chatInput.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
