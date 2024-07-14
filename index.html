@@ -74,6 +74,10 @@
             font-size: 20px;
             cursor: pointer;
         }
+
+        .bot-message {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -104,6 +108,16 @@
         });
 
         document.getElementById('sendChat').addEventListener('click', function() {
+            sendMessage();
+        });
+
+        document.getElementById('chatInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
             const chatInput = document.getElementById('chatInput');
             const chatBody = document.querySelector('.chatbot-body');
 
@@ -117,23 +131,26 @@
                 // Respond with preset messages
                 setTimeout(() => {
                     const botResponses = [
-                        "How can I help you?",
-                        "You can reach us on Messenger: " https://m.me/Illuminate%20Inception ",
-                        "You can contact us via WhatsApp: " https://wa.me/+9779846366349 ",
-                        "Visit our Facebook page: " https://www.facebook.com/profile.php?id=61562652415629 ",
-                        "Call us at: [9846366349]"
+                        { text: "You can reach us on Messenger:", link: "https://m.me/Illuminate%20Inception" },
+                        { text: "You can contact us via WhatsApp:", link: "https://wa.me/+9779846366349" },
+                        { text: "Visit our Facebook page:", link: "https://www.facebook.com/profile.php?id=61562652415629" },
+                        { text: "Call us at:", link: "tel:+977063420606 or +9779846366349" }
                     ];
 
-                    for (const response of botResponses) {
+                    botResponses.forEach(response => {
                         const botMessage = document.createElement('p');
-                        botMessage.textContent = response;
-                        botMessage.style.fontWeight = 'bold';
+                        const link = document.createElement('a');
+                        link.href = response.link;
+                        link.textContent = response.text + " " + response.link;
+                        link.target = "_blank";
+                        botMessage.appendChild(link);
+                        botMessage.classList.add('bot-message');
                         chatBody.appendChild(botMessage);
                         chatBody.scrollTop = chatBody.scrollHeight;
-                    }
+                    });
                 }, 500);
             }
-        });
+        }
     </script>
 </body>
 </html>
