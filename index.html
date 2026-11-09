@@ -137,42 +137,70 @@
             }
         });
 
-        function sendMessage() {
-            const chatInput = document.getElementById('chatInput');
-            const chatBody = document.getElementById('chatbotBody');
+        
+function sendMessage() {
+    const chatInput = document.getElementById('chatInput');
+    const chatBody = document.getElementById('chatbotBody');
 
-            if (chatInput.value.trim() !== '') {
-                const userMessage = document.createElement('p');
-                userMessage.textContent = chatInput.value;
-                userMessage.style.textAlign = 'right';
-                userMessage.style.marginBottom = '5px';
-                chatBody.appendChild(userMessage);
-                chatInput.value = '';
-                chatBody.scrollTop = chatBody.scrollHeight;
+    const message = chatInput.value.trim().toLowerCase();
 
-                // Respond with preset messages
-                setTimeout(() => {
-                    const botResponses = [
-                       { text: "You can reach us on Messenger:", link: "https://m.me/Illuminate%20Inception" },
-                        { text: "You can contact us via WhatsApp:", link: "https://wa.me/+9779846366349" },
-                        { text: "Visit our Facebook page:", link: "https://www.facebook.com/profile.php?id=61562652415629" },
-                        { text: "Call us at:", link: "tel:+977063420606 or +9779846366349" }
-                    ];
+    if (message === '') {
+        return;
+    }
 
-                    botResponses.forEach(response => {
-                        const botMessage = document.createElement('p');
-                        const link = document.createElement('a');
-                        link.href = response.link;
-                        link.textContent = response.text + " " + response.link;
-                        link.target = "_blank";
-                        botMessage.appendChild(link);
-                        botMessage.classList.add('bot-message');
-                        chatBody.appendChild(botMessage);
-                        chatBody.scrollTop = chatBody.scrollHeight;
-                    });
-                }, 500);
-            }
-        }
+    // Display the user's message
+    const userMessage = document.createElement('p');
+    userMessage.textContent = chatInput.value.trim();
+    userMessage.style.textAlign = 'right';
+    userMessage.style.marginBottom = '5px';
+
+    chatBody.appendChild(userMessage);
+
+    // Determine the appropriate response
+let response;
+
+if (/^(hello|hi|hey|good morning|good afternoon|good evening)\b/.test(message)) {
+    response = 'Hello! Welcome. How can I help you today?';
+
+} else if (message.includes('how are you')) {
+    response = "I'm doing well, thank you! How can I assist you today?";
+
+} else if (message.includes('whatsapp')) {
+    response = 'You can reach us on WhatsApp: +9779846366349';
+
+} else if (message.includes('messenger')) {
+    response = 'You can message our team on Messenger: https://m.me/Illuminate%20Inception';
+
+} else if (message.includes('facebook')) {
+    response = 'Visit our Facebook page: https://www.facebook.com/profile.php?id=61562652415629';
+
+} else if (message.includes('contact') || message.includes('phone')) {
+    response = 'You can contact our team through WhatsApp or Messenger.';
+
+} else if (message.includes('location') || message.includes('address')) {
+    response = 'Please contact our team for location information.';
+
+} else if (message.includes('thank')) {
+    response = "You're welcome! Let us know if you need anything else.";
+
+} else {
+    response = "Sorry, I don't understand that question yet. Please contact our team for assistance.";
+}
+
+
+    // Display the chatbot response
+    setTimeout(() => {
+        const botMessage = document.createElement('p');
+        botMessage.textContent = response;
+        botMessage.classList.add('bot-message');
+
+        chatBody.appendChild(botMessage);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }, 500);
+
+    chatInput.value = '';
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
     </script>
 </body>
 </html>
